@@ -1,111 +1,58 @@
-# MCP Chat
+# mcp_enabled_chatbot
 
-MCP Chat is a command-line interface application that enables interactive chat capabilities with AI models through the Anthropic API. The application supports document retrieval, command-based prompts, and extensible tool integrations via the MCP (Model Control Protocol) architecture.
+This is a simple command-line chatbot I built that talks to AI models using the Anthropic API. On top of normal Q&A, it supports pulling in documents and running custom commands. Under the hood, it uses **MCP (Model Control Protocol)**, which makes it easy to plug in extra tools or extend the chatbot later.  
 
-## Prerequisites
+## What you need
 
-- Python 3.9+
-- Anthropic API Keys
+- Python 3.9 or above  
+- An Anthropic API key (from your Anthropic account)  
 
 ## Setup
 
-### Step 1: Configure the environment variables
+### 1. Add your API key
+Create a `.env` file in the root folder and put your key like this:
 
-1. Create or edit the `.env` file in the project root and verify that the following variables are set correctly:
+ANTHROPIC_API_KEY="your-secret-key"
 
-```
-ANTHROPIC_API_KEY=""  # Enter your Anthropic API secret key
-```
+### 2. Install dependencies
 
-### Step 2: Install dependencies
+You can set it up in two ways:
 
-#### Option 1: Setup with uv (Recommended)
+#### Option A: With [uv](https://github.com/astral-sh/uv) (faster and cleaner)
 
-[uv](https://github.com/astral-sh/uv) is a fast Python package installer and resolver.
-
-1. Install uv, if not already installed:
-
-```bash
 pip install uv
-```
-
-2. Create and activate a virtual environment:
-
-```bash
 uv venv
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-```
-
-3. Install dependencies:
-
-```bash
+source .venv/bin/activate # (on Windows: .venv\Scripts\activate)
 uv pip install -e .
-```
-
-4. Run the project
-
-```bash
 uv run main.py
-```
 
-#### Option 2: Setup without uv
+#### Option B: Classic Python venv
 
-1. Create and activate a virtual environment:
-
-```bash
 python -m venv .venv
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-```
-
-2. Install dependencies:
-
-```bash
+source .venv/bin/activate # (on Windows: .venv\Scripts\activate)
 pip install anthropic python-dotenv prompt-toolkit "mcp[cli]==1.8.0"
-```
-
-3. Run the project
-
-```bash
 python main.py
-```
 
-## Usage
+## How to use
 
-### Basic Interaction
+- **Chat normally:** just type something and hit Enter.  
+- **Pull in a document:** use `@` followed by the file name:  
 
-Simply type your message and press Enter to chat with the model.
+Tell me about @deposition.md
 
-### Document Retrieval
+- **Run a command:** use `/` before your command:  
 
-Use the @ symbol followed by a document ID to include document content in your query:
+/summarize deposition.md
 
-```
-> Tell me about @deposition.md
-```
+(press Tab to auto-complete available commands)  
 
-### Commands
+## Hacking on it
 
-Use the / prefix to execute commands defined in the MCP server:
+- Add new documents → update the `docs` dictionary in `mcp_server.py`.  
+- Add new features → check the TODOs in `mcp_server.py` and `mcp_client.py`.  
 
-```
-> /summarize deposition.md
-```
+No linting or type checks yet — I kept it lightweight to focus on the features.  
 
-Commands will auto-complete when you press Tab.
+---
 
-## Development
-
-### Adding New Documents
-
-Edit the `mcp_server.py` file to add new documents to the `docs` dictionary.
-
-### Implementing MCP Features
-
-To fully implement the MCP features:
-
-1. Complete the TODOs in `mcp_server.py`
-2. Implement the missing functionality in `mcp_client.py`
-
-### Linting and Typing Check
-
-There are no lint or type checks implemented.
+⚡ Basically, this is a playground chatbot where I’ve tried out using MCP + Anthropic together. You can extend it however you like.
