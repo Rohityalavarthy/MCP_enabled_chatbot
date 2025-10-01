@@ -51,7 +51,7 @@ Tell me about @deposition.md
 - Add new documents → update the `docs` dictionary in `mcp_server.py`.  
 - Add new features → check the TODOs in `mcp_server.py` and `mcp_client.py`.  
 
-No linting or type checks yet — I kept it lightweight to focus on the features.  
+No linting or type checks yet - I kept it lightweight to focus on the features.  
 
 ---
 
